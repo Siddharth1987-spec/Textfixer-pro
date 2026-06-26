@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Fixer Pro👑 - Free Online Text Editor & Word Counter</title>
+    <style>
+        :root { --bg-color: #f4f6f9; --card-bg: #ffffff; --text-color: #333333; --primary: #3498db; --toolbar-bg: #edf2f7; --border: #e2e8f0; }
+        .dark-theme { --bg-color: #1a202c; --card-bg: #2d3748; --text-color: #f7fafc; --primary: #63b3ed; --toolbar-bg: #4a5568; --border: #4a5568; }
+        
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; transition: all 0.2s ease; }
+        .container { max-width: 850px; width: 100%; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); box-sizing: border-box; }
+        
+        .header-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        h1 { margin: 0; color: var(--primary); font-size: 24px; }
+        .theme-btn { background: #4a5568; color: white; padding: 8px 15px; font-size: 13px; border-radius: 20px; cursor: pointer; border: none; font-weight: bold; }
+        
+        /* Well Aligned Toolbar */
+        .toolbar { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; background: var(--toolbar-bg); padding: 12px; border-radius: 8px; align-items: center; border: 1px solid var(--border); }
+        .tool-group { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; border-right: 2px solid var(--border); padding-right: 15px; }
+        .tool-group:last-child { border-right: none; padding-right: 0; }
+        
+        .tool-item { display: flex; flex-direction: column; font-size: 12px; font-weight: bold; }
+        .tool-item select, .tool-item input { margin-top: 4px; padding: 6px; border-radius: 4px; border: 1px solid #cbd5e0; font-size: 13px; background: white; color: #333; height: 32px; box-sizing: border-box; }
+        .tool-item input[type="color"] { width: 45px; padding: 2px; cursor: pointer; }
+        .search-input { width: 140px; padding: 6px; border-radius: 4px; border: 1px solid #cbd5e0; font-size: 13px; height: 32px; box-sizing: border-box; }
+
+        /* Textarea Controls */
+        textarea { width: 100%; height: 250px; border: 2px solid var(--border); border-radius: 8px; padding: 15px; font-size: 16px; box-sizing: border-box; resize: vertical; background: var(--card-bg); color: var(--text-color); line-height: 1.5; transition: border-color 0.2s; }
+        textarea:focus { border-color: var(--primary); outline: none; }
+        
+        /* Stats Grid with Line Counter */
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 15px 0; }
+        .stat-box { background: var(--toolbar-bg); padding: 12px; border-radius: 8px; text-align: center; font-size: 18px; font-weight: bold; border: 1px solid var(--border); }
+        .stat-box span { display: block; font-size: 13px; color: #a0aec0; font-weight: normal; margin-top: 4px; }
+        
+        /* Action Buttons Area */
+        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); }
+        button.action-btn { background: var(--primary); color: white; border: none; padding: 10px 16px; font-size: 13px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; gap: 5px; }
+        button.action-btn:hover { filter: brightness(90%); }
+        .success-btn { background: #2ecc71 !important; }
+        .clear-btn { background: #e74c3c !important; }
+        .search-btn { background: #9b59b6 !important; height: 32px; padding: 0 12px; margin-top: 16px; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-area">
+        <h1>Text Fixer Pro👑</h1>
+        <button class="theme-btn" onclick="toggleTheme()">🌓 Dark Mode</button>
+    </div>
+    
+    <div class="toolbar">
+        <div class="tool-group">
+            <div class="tool-item">
+                <label>Font Style</label>
+                <select id="fontStyle" onchange="applyStyles()">
+                    <option value="'Segoe UI', sans-serif">Standard</option>
+                    <option value="'Times New Roman', serif">Classic</option>
+                    <option value="'Courier New', monospace">Coding</option>
+                    <option value="'Georgia', serif">Elegant</option>
+                    <option value="Impact, sans-serif">Bold</option>
+                </select>
+            </div>
+            <div class="tool-item">
+                <label>Font Size</label>
+                <select id="fontSize" onchange="applyStyles()">
+                    <option value="14px">14px</option>
+                    <option value="16px" selected>16px</option>
+                    <option value="18px">18px</option>
+                    <option value="22px">22px</option>
+                    <option value="26px">26px</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="tool-group">
+            <div class="tool-item">
+                <label>Text Color</label>
+                <input type="color" id="textColor" value="#333333" oninput="applyStyles()">
+            </div>
+            <div class="tool-item">
+                <label>Highlight</label>
+                <input type="color" id="bgColor" value="#ffffff" oninput="applyStyles()">
+            </div>
+        </div>
+
+        <div class="tool-group">
+            <div class="tool-item">
+                <label>Alignment</label>
+                <select id="textAlignment" onchange="applyStyles()">
+                    <option value="left">Left</option>
+                    <option value="center">Center</option>
+                    <option value="right">Right</option>
+                    <option value="justify">Justify</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="tool-group" style="border: none;">
+            <div class="tool-item">
+                <label>Search Word</label>
+                <input type="text" id="searchBox" class="search-input" placeholder="Type to find...">
+            </div>
+            <button class="search-btn" onclick="searchText()">Find</button>
+        </div>
+    </div>
+
+    <textarea id="textInput" placeholder="Paste or type your text here to process instantly..."></textarea>
+    
+    <div class="stats-grid">
+        <div class="stat-box"><span id="wordCount">0</span><span>Words</span></div>
+        <div class="stat-box"><span id="charCount">0</span><span>Characters</span></div>
+        <div class="stat-box"><span id="lineCount">0</span><span>Total Lines</span></div>
+    </div>
+
+    <div class="btn-group">
+        <button class="action-btn" onclick="transformText('upper')">UPPERCASE</button>
+        <button class="action-btn" onclick="transformText('lower')">lowercase</button>
+        <button class="action-btn" onclick="transformText('title')">Title Case</button>
+        <button class="action-btn" onclick="removeSpaces()">Remove Spaces</button>
+        <button class="action-btn" onclick="speakText()">🔊 Speak Text</button>
+        <button class="action-btn success-btn" onclick="copyText()">📋 Copy Text</button>
+        <button class="action-btn success-btn" style="background:#e67e22 !important;" onclick="downloadText()">💾 Download .txt</button>
+        <button class="action-btn clear-btn" onclick="clearText()">Clear Screen</button>
+    </div>
+</div>
+
+<script>
+    const textInput = document.getElementById('textInput');
+    const wordCount = document.getElementById('wordCount');
+    const charCount = document.getElementById('charCount');
+    const lineCount = document.getElementById('lineCount');
+    
+    const fontStyle = document.getElementById('fontStyle');
+    const fontSize = document.getElementById('fontSize');
+    const textColor = document.getElementById('textColor');
+    const bgColor = document.getElementById('bgColor');
+    const textAlignment = document.getElementById('textAlignment');
+    const searchBox = document.getElementById('searchBox');
+
+    // Real-time Counters (Words, Chars, Lines) - Completely Delay Free
+    textInput.addEventListener('input', updateCounts);
+    function updateCounts() {
+        const text = textInput.value;
+        
+        // Character count
+        charCount.innerText = text.length;
+        
+        // Word count
+        const words = text.trim().split(/\s+/).filter(item => item.length > 0);
+        wordCount.innerText = words.length;
+        
+        // Line count
+        const lines = text.length === 0 ? 0 : text.split('\n').length;
+        lineCount.innerText = lines;
+    }
+
+    // Dynamic Toolbar Styling Function
+    function applyStyles() {
+        textInput.style.fontFamily = fontStyle.value;
+        textInput.style.fontSize = fontSize.value;
+        textInput.style.color = textColor.value;
+        textInput.style.backgroundColor = bgColor.value;
+        textInput.style.textAlign = textAlignment.value;
+    }
+
+    // Text Case Transformations
+    function transformText(type) {
+        let txt = textInput.value;
+        if (type === 'upper') textInput.value = txt.toUpperCase();
+        if (type === 'lower') textInput.value = txt.toLowerCase();
+        if (type === 'title') {
+            textInput.value = txt.replace(/\w\S*/g, (w) => w.charAt(0).toUpperCase() + w.substr(1).toLowerCase());
+        }
+        updateCounts();
+    }
+
+    // Remove Extra Spaces
+    function removeSpaces() {
+        textInput.value = textInput.value.replace(/\s+/g, ' ').trim();
+        updateCounts();
+    }
+
+    // Search Within Text Tool
+    function searchText() {
+        const query = searchBox.value.trim();
+        const text = textInput.value;
+        if (!query) { alert("Please type something in the search box first."); return; }
+        
+        if (text.includes(query)) {
+            const count = text.split(query).length - 1;
+            alert(`"${query}" is found ${count} time(s) in the text!`);
+        } else {
+            alert(`"${query}" not found!`);
+        }
+    }
+
+    // Download Text as .txt File
+    function downloadText() {
+        const text = textInput.value;
+        if(!text) { alert("Cannot download empty file!"); return; }
+        
+        const blob = new Blob([text], { type: "text/plain" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "my-text-file.txt";
+        link.click();
+        URL.revokeObjectURL(link.href);
+    }
+
+    // Copy Text to Clipboard
+    function copyText() {
+        if(!textInput.value) { alert("Nothing to copy!"); return; }
+        textInput.select();
+        navigator.clipboard.writeText(textInput.value);
+        alert("Text copied successfully!");
+    }
+
+    // Text to Speech Voice Reader
+    function speakText() {
+        if ('speechSynthesis' in window) {
+            if(!textInput.value) return;
+            window.speechSynthesis.cancel(); // Reset any ongoing audio
+            const speech = new SpeechSynthesisUtterance(textInput.value);
+            window.speechSynthesis.speak(speech);
+        } else {
+            alert("Audio Speech not supported in this browser.");
+        }
+    }
+
+    // Dark/Light Theme Switcher
+    function toggleTheme() {
+        document.body.classList.toggle('dark-theme');
+    }
+
+    // Reset Page
+    function clearText() {
+        textInput.value = '';
+        searchBox.value = '';
+        updateCounts();
+        // Reset visual styles to default values
+        textInput.style.color = '#333333';
+        textInput.style.backgroundColor = '#ffffff';
+        textInput.style.fontFamily = "'Segoe UI', sans-serif";
+        textInput.style.fontSize = "16px";
+        textInput.style.textAlign = "left";
+        textColor.value = '#333333';
+        bgColor.value = '#ffffff';
+        fontStyle.value = "'Segoe UI', sans-serif";
+        fontSize.value = "16px";
+        textAlignment.value = "left";
+    }
+</script>
+
+</body>
+</html>
