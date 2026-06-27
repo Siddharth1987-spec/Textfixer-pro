@@ -2,9 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="google-site-verification" content="MQuH0AV1IOGXvBxQzk1MIPmtOVRGJ8Qx8YHpug3IE_g" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Fixer Pro👑 - Free Online Text Editor & Word Counter</title>
+    <meta name="google-site-verification" content="MQuH0AV1IOGXvBxQzk1MIPmtOVRGJ8Qx8YHpug3IE_g" />
+    
+    <!-- GOOGLE SEARCH SEO META TAGS -->
+    <title>Text Fixer Pro | Free Online Text Editor & Word Counter</title>
+    <meta name="description" content="Fix, format, and clean up your text instantly with Text Fixer Pro. An advanced, free online text editor to count words, change case, clean spacing, read text aloud, and format strings directly in your browser.">
+    <meta name="keywords" content="text fixer pro, online text editor, word counter, title case converter, free text formatter, text utility tool, dark mode text pad">
+
+    <!-- BRAND SCHEMA MARKUP (Tells Google this is a unique application) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Text Fixer Pro",
+      "url": "https://siddharth1987-spec.github.io/Textfixer-pro/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5 support",
+      "description": "A professional web application for text cleaning, formatting, word counting, and speech synthesis."
+    }
+    </script>
+
     <style>
         :root { --bg-color: #f4f6f9; --card-bg: #ffffff; --text-color: #333333; --primary: #3498db; --toolbar-bg: #edf2f7; --border: #e2e8f0; }
         .dark-theme { --bg-color: #1a202c; --card-bg: #2d3748; --text-color: #f7fafc; --primary: #63b3ed; --toolbar-bg: #4a5568; --border: #4a5568; }
@@ -16,7 +35,6 @@
         h1 { margin: 0; color: var(--primary); font-size: 24px; }
         .theme-btn { background: #4a5568; color: white; padding: 8px 15px; font-size: 13px; border-radius: 20px; cursor: pointer; border: none; font-weight: bold; }
         
-        /* Well Aligned Toolbar */
         .toolbar { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; background: var(--toolbar-bg); padding: 12px; border-radius: 8px; align-items: center; border: 1px solid var(--border); }
         .tool-group { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; border-right: 2px solid var(--border); padding-right: 15px; }
         .tool-group:last-child { border-right: none; padding-right: 0; }
@@ -26,16 +44,13 @@
         .tool-item input[type="color"] { width: 45px; padding: 2px; cursor: pointer; }
         .search-input { width: 140px; padding: 6px; border-radius: 4px; border: 1px solid #cbd5e0; font-size: 13px; height: 32px; box-sizing: border-box; }
 
-        /* Textarea Controls */
         textarea { width: 100%; height: 250px; border: 2px solid var(--border); border-radius: 8px; padding: 15px; font-size: 16px; box-sizing: border-box; resize: vertical; background: var(--card-bg); color: var(--text-color); line-height: 1.5; transition: border-color 0.2s; }
         textarea:focus { border-color: var(--primary); outline: none; }
         
-        /* Stats Grid with Line Counter */
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 15px 0; }
         .stat-box { background: var(--toolbar-bg); padding: 12px; border-radius: 8px; text-align: center; font-size: 18px; font-weight: bold; border: 1px solid var(--border); }
         .stat-box span { display: block; font-size: 13px; color: #a0aec0; font-weight: normal; margin-top: 4px; }
         
-        /* Action Buttons Area */
         .btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); }
         button.action-btn { background: var(--primary); color: white; border: none; padding: 10px 16px; font-size: 13px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; gap: 5px; }
         button.action-btn:hover { filter: brightness(90%); }
@@ -48,7 +63,7 @@
 
 <div class="container">
     <div class="header-area">
-        <h1>Text Fixer Pro👑</h1>
+        <h1>Text Fixer Pro</h1>
         <button class="theme-btn" onclick="toggleTheme()">🌓 Dark Mode</button>
     </div>
     
@@ -141,24 +156,16 @@
     const textAlignment = document.getElementById('textAlignment');
     const searchBox = document.getElementById('searchBox');
 
-    // Real-time Counters (Words, Chars, Lines) - Completely Delay Free
     textInput.addEventListener('input', updateCounts);
     function updateCounts() {
         const text = textInput.value;
-        
-        // Character count
         charCount.innerText = text.length;
-        
-        // Word count
         const words = text.trim().split(/\s+/).filter(item => item.length > 0);
         wordCount.innerText = words.length;
-        
-        // Line count
         const lines = text.length === 0 ? 0 : text.split('\n').length;
         lineCount.innerText = lines;
     }
 
-    // Dynamic Toolbar Styling Function
     function applyStyles() {
         textInput.style.fontFamily = fontStyle.value;
         textInput.style.fontSize = fontSize.value;
@@ -167,7 +174,6 @@
         textInput.style.textAlign = textAlignment.value;
     }
 
-    // Text Case Transformations
     function transformText(type) {
         let txt = textInput.value;
         if (type === 'upper') textInput.value = txt.toUpperCase();
@@ -178,13 +184,11 @@
         updateCounts();
     }
 
-    // Remove Extra Spaces
     function removeSpaces() {
         textInput.value = textInput.value.replace(/\s+/g, ' ').trim();
         updateCounts();
     }
 
-    // Search Within Text Tool
     function searchText() {
         const query = searchBox.value.trim();
         const text = textInput.value;
@@ -198,7 +202,6 @@
         }
     }
 
-    // Download Text as .txt File
     function downloadText() {
         const text = textInput.value;
         if(!text) { alert("Cannot download empty file!"); return; }
@@ -211,7 +214,6 @@
         URL.revokeObjectURL(link.href);
     }
 
-    // Copy Text to Clipboard
     function copyText() {
         if(!textInput.value) { alert("Nothing to copy!"); return; }
         textInput.select();
@@ -219,11 +221,10 @@
         alert("Text copied successfully!");
     }
 
-    // Text to Speech Voice Reader
     function speakText() {
         if ('speechSynthesis' in window) {
             if(!textInput.value) return;
-            window.speechSynthesis.cancel(); // Reset any ongoing audio
+            window.speechSynthesis.cancel();
             const speech = new SpeechSynthesisUtterance(textInput.value);
             window.speechSynthesis.speak(speech);
         } else {
@@ -231,17 +232,14 @@
         }
     }
 
-    // Dark/Light Theme Switcher
     function toggleTheme() {
         document.body.classList.toggle('dark-theme');
     }
 
-    // Reset Page
     function clearText() {
         textInput.value = '';
         searchBox.value = '';
         updateCounts();
-        // Reset visual styles to default values
         textInput.style.color = '#333333';
         textInput.style.backgroundColor = '#ffffff';
         textInput.style.fontFamily = "'Segoe UI', sans-serif";
